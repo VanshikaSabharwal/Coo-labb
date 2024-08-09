@@ -1,11 +1,14 @@
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
-import ChatRoom from "@/app/components/ChatRoom/ChatRoom";
+import ChatRoom from "@/src/components/ChatRoom/ChatRoom";
+import { RxGithubLogo } from "react-icons/rx";
+import { AiFillGoogleCircle } from "react-icons/ai";
+import { getServerSession } from "next-auth";
 
 export default function Login() {
   const { data: session } = useSession();
-
+  console.log(session);
   if (session) {
     return (
       <>
@@ -19,7 +22,12 @@ export default function Login() {
         <h2 className=" text-center text-2xl ">Sign In to continue</h2>
 
         <div className="github text-center">
-          <button onClick={() => signIn("github")}>Sign in</button>
+          <button onClick={() => signIn("github")}>
+            <RxGithubLogo className="w-10 h-10 my-1 mx-1" />
+          </button>
+          <button onClick={() => signIn("google")}>
+            <AiFillGoogleCircle className="w-10 h-10 my-1 mx-1" />
+          </button>
         </div>
       </div>
     </div>
