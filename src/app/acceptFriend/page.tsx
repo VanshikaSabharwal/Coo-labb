@@ -6,17 +6,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const AcceptFriend: FC = () => {
-  const searchParams = useSearchParams(); // Get search params
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    const token = searchParams.get("token"); // Get the token from query params
+    const token = searchParams.get("token");
 
     if (token) {
       axios
-        .post("/api/accept-friend", { token })
+        .post("/api/acceptFriend", { token })
         .then((response) => {
           setSuccess(true);
         })
