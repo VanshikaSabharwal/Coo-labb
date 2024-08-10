@@ -1,10 +1,11 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  const token = req.body;
-  if (token) {
-    return res.status(200).json({ message: "Friend request accepted." });
-  } else {
-    return res.status(400).json({ message: "Invalid token." });
+export async function POST(req: Request) {
+  try {
+    const token = await req.json();
+
+    return NextResponse.json({ message: "Friend request accepted." });
+  } catch (error) {
+    return NextResponse.json({ message: "Invalid token." });
   }
 }
