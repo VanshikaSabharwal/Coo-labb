@@ -6,13 +6,14 @@ import { FC, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation"; // Correct import for App Router
+import { useRouter } from "next/navigation";
 
 interface AddFriendButtonProps {}
 type FormData = z.infer<typeof addFriendValidator>;
 
 const AddFriend: FC<AddFriendButtonProps> = () => {
   const [success, setSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const { register, handleSubmit } = useForm<FormData>({
@@ -21,20 +22,22 @@ const AddFriend: FC<AddFriendButtonProps> = () => {
 
   const handleShare = async (data: FormData) => {
     try {
-      // Generate a unique token (this should be generated on the server side in a real-world app)
-      const uniqueToken = "generated";
-      const shareableLink = `${window.location.origin}/accept-friend?token=${uniqueToken}`;
+      // Request to generate a unique token
+      const response = await axios.post("/api/generate-token");
+      const { token } = response.data;
+
+      // Construct the shareable link
+      const shareableLink = `${window.location.origin}/accept-friend?token=${token}`;
 
       // Copy the link to the clipboard
       await navigator.clipboard.writeText(shareableLink);
       alert("Link copied to clipboard!");
 
-      // Optionally, you could also navigate to another page
-      // router.push("/some-page");
-
       setSuccess(true);
+      setError(null); // Clear any previous errors
     } catch (error) {
       console.error("Failed to share the link:", error);
+      setError("Failed to generate or copy the link.");
       setSuccess(false);
     }
   };
@@ -56,6 +59,7 @@ const AddFriend: FC<AddFriendButtonProps> = () => {
       {success && (
         <p>Friend request has been generated and copied to clipboard!</p>
       )}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </>
   );
 };

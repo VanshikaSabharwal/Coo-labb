@@ -1,9 +1,8 @@
-// import type {NextApiRequest,}
-
 import { NextApiRequest, NextApiResponse } from "next";
+import { v4 as uuidv4 } from "uuid";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { token } = req.body;
+  const token = uuidv4();
   if (token) {
     return res.status(200).json({ message: "Friend request accepted." });
   } else {
