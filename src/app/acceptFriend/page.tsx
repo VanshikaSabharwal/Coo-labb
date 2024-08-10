@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import axios from "axios";
 
 const AcceptFriend: FC = () => {
@@ -38,4 +38,9 @@ const AcceptFriend: FC = () => {
   );
 };
 
-export default AcceptFriend;
+const SuspenseWrapper: React.FC = () => (
+  <Suspense fallback={<p>Loading....</p>}>
+    <AcceptFriend />
+  </Suspense>
+);
+export default SuspenseWrapper;
