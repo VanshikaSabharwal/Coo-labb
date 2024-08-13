@@ -5,13 +5,16 @@ import ChatRoom from "@/src/components/ChatRoom/ChatRoom";
 import { RxGithubLogo } from "react-icons/rx";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { getServerSession } from "next-auth";
+import OneToOneChat from "../components/OneToOneChat/OneToOneChat";
 
 export default function Login() {
   const { data: session } = useSession();
-  console.log(session);
+
   if (session) {
     return (
       <>
+        <h1>Chat App</h1>
+        <OneToOneChat receiverId="hello" />
         <ChatRoom />
       </>
     );

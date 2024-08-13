@@ -30,8 +30,7 @@ const AddFriend: FC<AddFriendButtonProps> = () => {
       await navigator.clipboard.writeText(shareableLink);
       alert("Link copied to clipboard!");
 
-      // Optionally, you could also navigate to another page
-      // router.push("/some-page");
+      router.push("/");
 
       setSuccess(true);
     } catch (error) {
