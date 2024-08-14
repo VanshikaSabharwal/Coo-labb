@@ -1,4 +1,4 @@
-"use client"; // components/OneToOneChat.tsx
+"use client";
 import React, { useState, useEffect } from "react";
 import useSocket from "../../../hooks/useSocket";
 
@@ -39,7 +39,6 @@ const OneToOneChat: React.FC<OneToOneChatProps> = ({ receiverId }) => {
 
   return (
     <div>
-      <h2>Sender Chat</h2>
       <div>
         {messages.map((msg, index) => (
           <div key={index}>{msg}</div>
